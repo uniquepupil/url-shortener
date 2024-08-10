@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DB_URI = 'mongodb+srv://parikshit:12345@cluster0.iah05.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your MongoDB Atlas connection string
 
 app.use(bodyParser.json());
@@ -25,17 +25,20 @@ const Url = mongoose.model('Url', urlSchema);
 
 // Shorten URL
 app.post('/shorten', async (req, res) => {
-  const { url } = req.body;
-  const id = Math.random().toString(36).substring(2, 8);
+    const { url } = req.body;
+    const id = Math.random().toString(36).substring(2, 8);
+    
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
   
-  try {
-    const newUrl = new Url({ shortId: id, originalUrl: url });
-    await newUrl.save();
-    res.json({ shortUrl: `http://localhost:${PORT}/${id}` });
-  } catch (error) {
-    res.status(500).send('Error saving URL');
-  }
-});
+    try {
+      const newUrl = new Url({ shortId: id, originalUrl: url });
+      await newUrl.save();
+      res.json({ shortUrl: `${baseUrl}/${id}` });
+    } catch (error) {
+      res.status(500).send('Error saving URL');
+    }
+  });
+  
 
 // Redirect
 app.get('/:id', async (req, res) => {
