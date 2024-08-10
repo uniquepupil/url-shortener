@@ -10,11 +10,20 @@
   <div class="container">
     <h1>URL Shortener</h1>
     <form id="shortenForm">
-      <input type="url" id="url" placeholder="Enter URL" required>
-      <button type="submit">Shorten</button>
+        <div class="url-shortener">
+      <input type="url" id="url" placeholder="Enter your URL here..." required>
+      <button type="submit">Shorten</button></div>
     </form>
     <p id="result"></p>
   </div>
+  <footer>
+    <p>Made with <3 by <a href="https://linkedin.com/in/uniquepupil" target="_blank">uniquepupil</a></p>
+    <p>
+      <a href="https://www.instagram.com/unique_pupil" target="_blank">Instagram</a> | 
+      <a href="https://github.com/uniquepupil" target="_blank">GitHub</a> | 
+      <a href="mailto:parikshitbhardwaj6@gmail.com">Gmail</a>
+    </p>
+  </footer>
   <script>
     document.getElementById('shortenForm').addEventListener('submit', async (e) => {
       e.preventDefault();
