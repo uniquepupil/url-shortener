@@ -35,7 +35,7 @@ app.post('/shorten', async (req, res) => {
       await newUrl.save();
       res.json({ shortUrl: `${baseUrl}/${id}` });
     } catch (error) {
-      res.status(500).send('Error saving URL');
+      res.status(500).send('Error saving  URL');
     }
   });
   
