@@ -59,3 +59,10 @@ app.get('/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+// netlify/functions/server.js
+exports.handler = async (event, context) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: "Hello from Netlify Functions!" })
+  };
+};
