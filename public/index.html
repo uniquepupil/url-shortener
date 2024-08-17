@@ -34,7 +34,6 @@
   </div>
   <footer>
     <p>Made with <3 by <a href="https://linkedin.com/in/uniquepupil" target="_blank">uniquepupil</a></p>
-    
   </footer>
   <script>
     document.getElementById('shortenForm').addEventListener('submit', async (e) => {
@@ -59,9 +58,25 @@
 
     document.getElementById('copyIcon').addEventListener('click', () => {
       const shortUrl = document.getElementById('shortUrlLink').innerText;
-      navigator.clipboard.writeText(shortUrl).then(() => {
-        alert('URL copied to clipboard');
-      });
+
+      // Create a temporary input element
+      const input = document.createElement('input');
+      input.setAttribute('value', shortUrl);
+      
+      // Append the input element to the body
+      document.body.appendChild(input);
+      
+      // Select the text in the input element
+      input.select();
+      
+      // Copy the text to the clipboard
+      document.execCommand('copy');
+      
+      // Remove the input element from the body
+      document.body.removeChild(input);
+      
+      // Alert the user that the URL has been copied
+      alert('URL copied to clipboard');
     });
   </script>
 </body>
