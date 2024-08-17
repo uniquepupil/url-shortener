@@ -1,92 +1,85 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(to right, #e0eafc, #cfdef3);
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  input {
-    width: 300px;
-    padding: 10px;
-    margin-right: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-  
-  p {
-    margin-top: 20px;
-    font-size: 18px;
-  }
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.container {
+  text-align: center;
+}
+
+.url-shortener input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 300px;
+  margin-right: 10px;
+}
+
+.url-shortener button {
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.url-shortener button:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
   .url-shortener input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 300px;
-    margin-right: 10px;
- }
- 
- .url-shortener button {
-    padding: 10px 15px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
- }
- 
- .url-shortener button:hover {
-    background-color: #2980b9;
- }
- @media (max-width: 600px) {
-    .url-shortener input {
-       width: 100%;
-       margin-bottom: 10px;
-    }
- }
- .url-shortener button {
-    transition: background-color 0.3s ease;
- }
- 
- .url-shortener button:hover {
-    background-color: #2980b9;
- }
- footer {
-    
-    padding: 20px;
-    text-align: center;
-    
-    position: fixed;
-    bottom: 0;
     width: 100%;
+    margin-bottom: 10px;
   }
-  
-  footer p {
-    margin: 5px 0;
-    color: #333;
-  }
-  
-  footer a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  footer a:hover {
-    text-decoration: underline;
-  }
-  #result {
-    display: none;
-  }
-  .copy-icon {
-    cursor: pointer;
-    margin-left: 10px;
-  }
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 5px 0;
+  color: #333;
+}
+
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+#result {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#result.show {
+  display: block;
+  opacity: 1;
+}
+
+.copy-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.copy-icon:hover {
+  color: #3498db;
+}

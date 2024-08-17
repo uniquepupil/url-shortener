@@ -6,20 +6,6 @@
   <title>URL Shortener</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* Additional styles for visual feedback */
-    .copy-icon {
-      cursor: pointer;
-      transition: color 0.3s, transform 0.3s;
-    }
-    .copy-icon.copied {
-      color: green;
-      transform: scale(1.2);
-    }
-    #result {
-      display: none;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -44,31 +30,22 @@
     document.getElementById('shortenForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const url = document.getElementById('url').value;
-      try {
-        const response = await fetch('/shorten', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ url }),
-        });
-        if (!response.ok) {
-          throw new Error('Failed to shorten URL');
-        }
-        const data = await response.json();
-        const shortUrl = data.shortUrl;
-        const shortUrlLink = document.getElementById('shortUrlLink');
-        const resultDiv = document.getElementById('result');
-
-        shortUrlLink.href = shortUrl;
-        shortUrlLink.innerText = shortUrl;
-        resultDiv.style.display = 'block';
-
-        // Clear the input field
-        document.getElementById('url').value = '';
-      } catch (error) {
-        alert('Error: ' + error.message);
-      }
+      const response = await fetch('/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url }),
+      });
+      const data = await response.json();
+      const shortUrl = data.shortUrl;
+      const shortUrlLink = document.getElementById('shortUrlLink');
+      const resultDiv = document.getElementById('result');
+      
+      shortUrlLink.href = shortUrl;
+      shortUrlLink.innerText = shortUrl;
+      resultDiv.classList.add('show'); // Use CSS class to handle display and opacity
+      document.getElementById('url').value = ''; // Clear the input field
     });
 
     document.getElementById('copyIcon').addEventListener('click', () => {
@@ -90,12 +67,9 @@
       // Remove the input element from the body
       document.body.removeChild(input);
       
-      // Add visual feedback
-      const copyIcon = document.getElementById('copyIcon');
-      copyIcon.classList.add('copied');
-      setTimeout(() => {
-        copyIcon.classList.remove('copied');
-      }, 1000); // Adjust duration as needed
+      // Clear the result display
+      document.getElementById('shortUrlLink').innerText = '';
+      document.getElementById('result').classList.remove('show'); // Hide result
     });
   </script>
 </body>
