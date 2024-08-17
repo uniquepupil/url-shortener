@@ -7,12 +7,17 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    #result {
-      display: none;
-    }
+    /* Additional styles for visual feedback */
     .copy-icon {
       cursor: pointer;
-      margin-left: 10px;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .copy-icon.copied {
+      color: green;
+      transform: scale(1.2);
+    }
+    #result {
+      display: none;
     }
   </style>
 </head>
@@ -33,27 +38,37 @@
     </div>
   </div>
   <footer>
-    <p>Made with <3 by <a href="https://linkedin.com/in/uniquepupil" target="_blank">uniquepupil</a></p>
+    <p>Made by <a href="https://linkedin.com/in/uniquepupil" target="_blank">uniquepupil</a></p>
   </footer>
   <script>
     document.getElementById('shortenForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const url = document.getElementById('url').value;
-      const response = await fetch('/shorten', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-      });
-      const data = await response.json();
-      const shortUrl = data.shortUrl;
-      const shortUrlLink = document.getElementById('shortUrlLink');
-      const resultDiv = document.getElementById('result');
-      
-      shortUrlLink.href = shortUrl;
-      shortUrlLink.innerText = shortUrl;
-      resultDiv.style.display = 'block';
+      try {
+        const response = await fetch('/shorten', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ url }),
+        });
+        if (!response.ok) {
+          throw new Error('Failed to shorten URL');
+        }
+        const data = await response.json();
+        const shortUrl = data.shortUrl;
+        const shortUrlLink = document.getElementById('shortUrlLink');
+        const resultDiv = document.getElementById('result');
+
+        shortUrlLink.href = shortUrl;
+        shortUrlLink.innerText = shortUrl;
+        resultDiv.style.display = 'block';
+
+        // Clear the input field
+        document.getElementById('url').value = '';
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
     });
 
     document.getElementById('copyIcon').addEventListener('click', () => {
@@ -75,8 +90,12 @@
       // Remove the input element from the body
       document.body.removeChild(input);
       
-      // Alert the user that the URL has been copied
-      alert('URL copied to clipboard');
+      // Add visual feedback
+      const copyIcon = document.getElementById('copyIcon');
+      copyIcon.classList.add('copied');
+      setTimeout(() => {
+        copyIcon.classList.remove('copied');
+      }, 1000); // Adjust duration as needed
     });
   </script>
 </body>
